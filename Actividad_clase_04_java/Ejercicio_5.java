@@ -7,25 +7,28 @@ public class Ejercicio_5{
        System.out.print("Ingrese un numero: ");
        int numero = entrada.nextInt();
 
-       int contador = 0;
-       int sumanumeros = 0;
-       int numero1 = 0;
-       int numero2 = 1;
-       int sumanumeros2 = 0;
-       int sumanumeros3 = 0;
-       while(contador <= numero){
-        
-        sumanumeros = (numero1 + numero2);
-        sumanumeros2 = (sumanumeros + numero2);
-        sumanumeros3 = (sumanumeros2 + sumanumeros);
-        contador = contador + 1;
-        System.out.print(""+numero1+" ,"+numero2+" ,"+sumanumeros3);
-
-        
-        
+       int a = 0; 
+       int b = 1; 
+       int contador = 1; 
     
+      while(contador <= numero){
+        if(contador == 1){
+            System.out.print(a+",");
+        }
+        if(contador == 2){
+            System.out.print(b+" ,");
+        }
+         if(contador > 2){
+            int numfab = a + b;
+            System.out.print(numfab+" ,");
+            a = b;
+            b = numfab;
+        }
 
-       }
+        contador = contador + 1;
+
+
+      }
        
 
 
