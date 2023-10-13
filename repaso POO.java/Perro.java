@@ -97,10 +97,64 @@ public void comer(int gramos){
 
 }
 
+public void cagar(int numVeces){
+    //debe bajar el peso según el número de veces que cago
+    //cada cagada baja 0,5g
+    double gramos = 0.5f;
+    double bajaPeso = (numVeces * gramos);
+    
+}
+
+public void correr(int tiempo){
+    //modifica peso y energia
+    //por cada 10 minutos el perro baja 1 gramo;
+    //por cada 10 minutos el perro baja un entero de energia
+    peso -= ((double)tiempo / 10 );
+    if(peso <= 1.0){
+        System.out.println("|---El perro perdio mucho peso, PORFAVOR SUMINISTRLE---|");
+    }
+    int timepoEnergia = (tiempo/10);
+    energia -= timepoEnergia;
+    if(energia <= 5){
+        System.out.println("|---El perro no tiene energia, PORFAVOR SUMINISTRLE---|");
+    }
+    
+}
+
+public void dormir(int tiempo){
+    //la energia debe aumentar
+    //el tiempo es en minutos / por cada 10 minutos, sube una rayita de energia
+    energia += (tiempo/10);
+}
 
 
+public void ladrar(int numVeces){
+    //debe de bajar la energia
+    //por cada 10 veces que ladre, baja una rayita la energia
+    if(numVeces >= 10){
+        energia -= (numVeces / 10);
+    }
+}
 
+public void jugar(int intensidad, int tiempo){
+    //debe bajar la energia y el peso
+    //la intensidad se mide en un rango del 1 al 10
+    if(intensidad > 0 && intensidad <= 10){
+         int bajar = (intensidad * tiempo)/100;
+         energia -= bajar;
 
+         peso -= ((double)bajar/1000);
+    }
+   
+}
+
+public void pelear(int intensidad){
+    //debe bajar la energia, como resultado de multiplicar la intensidad por 5, para que /de un porcentaje alto
+     //la intensidad se mide en un rango del 1 al 10
+    if(intensidad > 0 && intensidad <= 10){ 
+         energia -= (intensidad*5);
+    }
+}
 
 
 
