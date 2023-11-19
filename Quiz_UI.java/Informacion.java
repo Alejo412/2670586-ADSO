@@ -11,11 +11,9 @@ public class Informacion{
         this.nota = nota; 
     }
 
-    public void imprimir(){
-        //return this.materia+" -> "+this.creditos+" -> "+this.nota;
-        System.out.println(this.materia);
-        System.out.println(this.creditos);
-        System.out.println(this.nota);
+    public String imprimir(){
+        return this.materia+" -> Creditos: "+this.creditos+" -> Nota: "+this.nota;
+       
     }
 
 

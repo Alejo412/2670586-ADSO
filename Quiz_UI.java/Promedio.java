@@ -17,24 +17,33 @@ public class Promedio extends JFrame{
     JButton btn_registrar;
     JLabel etq_resumen;
     JLabel etq_total;
+    JTextField campo_total;
     JButton btn_limpiar;
     JPanel contenedorItems;
     JLabel listaJLabels [];
     Informacion arreglo [];
- 
+    int contador = 0;
+    int contador2 = 0; 
+    double acumuladorNotaCredito = 0;
+    double acumTemporalNota = 0;
+    double acumCreditos = 0;
+    double acumTemporalCredito = 0;
+    double totalPonderado;
 
 
 
     public Promedio(){
         initComponent();
+
     }
 
     public void initComponent(){
         this.listaJLabels = new JLabel [50];
         arreglo = new Informacion[50];
+       
 
         setTitle("Promedio_Producto");
-        setSize(746,691);
+        setSize(546,691);
         setDefaultCloseOperation( EXIT_ON_CLOSE );
 		setLocationRelativeTo(null);
         setIconImage( getToolkit().createImage( ClassLoader.getSystemResource("img/icono_promedio.png") ) );
@@ -45,7 +54,7 @@ public class Promedio extends JFrame{
         contenedor.setBorder( BorderFactory.createEmptyBorder(20, 20, 20, 20));
         GridBagConstraints restriccion = new GridBagConstraints();
 
-        titulo = new JLabel("CALCULAR PROMEDIO");
+        titulo = new JLabel("PROMEDIO PONDERADO");
         titulo.setFont( new Font("Arial", Font.BOLD, 40));
         titulo.setHorizontalAlignment(JLabel.CENTER);
         restriccion.gridx = 0;
@@ -213,15 +222,31 @@ public class Promedio extends JFrame{
         etq_total.setFont( new Font("Arial",Font.BOLD,30));
         restriccion.gridx = 1;
         restriccion.gridy = 5;
-        restriccion.gridwidth = 2;
+        restriccion.gridwidth = 1;
         restriccion.gridheight = 1;
-        restriccion.weightx = 100;
+        restriccion.weightx = 20;
         restriccion.weighty = 1;
          restriccion.insets = new Insets(10,0,5,0);
         restriccion.fill = GridBagConstraints.NONE;
         contenedor.add(etq_total,restriccion);
         restriccion.insets = new Insets(0,0,0,0);
         
+
+        campo_total = new JTextField();
+        campo_total.setFont( new Font("Arial",Font.BOLD,40));
+        campo_total.setForeground(Color.BLUE);
+        restriccion.gridx = 2;
+        restriccion.gridy = 5;
+        restriccion.gridwidth = 2;
+        restriccion.gridheight = 1;
+        restriccion.weightx = 80;
+        restriccion.weighty = 1;
+        restriccion.insets = new Insets(10,0,5,0);
+        restriccion.fill = GridBagConstraints.BOTH;
+        contenedor.add(campo_total,restriccion);
+        restriccion.insets = new Insets(0,0,0,0);
+        desHabilitarInput(campo_total);
+
 
         btn_limpiar = new JButton("LIMPIAR");
         btn_limpiar.setBackground(Color.YELLOW);
@@ -237,43 +262,103 @@ public class Promedio extends JFrame{
         restriccion.insets = new Insets(0,0,0,0);
 
       
-
+        
+        add(contenedor);
+		setResizable(false);
+		setVisible(true);
+		revalidate();
        
         
-
+        
         ActionListener evento_registrar = new ActionListener(){
+           
+            
             public void actionPerformed(ActionEvent event){
 
                 String materia = campo_materia.getText();
                 double creditos = Double.parseDouble(campo_credito.getText());
                 double nota = Double.parseDouble(campo_nota.getText());
                 Informacion informacion = new Informacion(materia, creditos, nota);
-                String texto = "<html>";
-               
-                for(int i = 0; i < listaJLabels.length ; i++){
-                    //if(listaJLabels[i] != null){
-                        informacion.imprimir(); 
-                        
-                    //}
-                    //texto = informacion.imprimir();
-                    //listaJLabels[i].setText(texto);
+
+                for(int i = 0; i < arreglo.length; i++){
+                    arreglo[i] = informacion;
+                }
+                if(contador < arreglo.length){
+                    arreglo[contador] = informacion;
+                    System.out.println(contador+" "+arreglo[contador].imprimir());
+                    
+                       String texto = "<html>";
+                       if(contador < listaJLabels.length && listaJLabels[contador] != null){
+                             texto = arreglo[contador].imprimir();
+                             listaJLabels[contador].setText(texto);
+           
+                    
+                        }
+                         texto += "</html>";
+                         contador++;
+
+                }
+                    
+                for(int i = 0; i < contador; i++){
+                    acumTemporalNota = (arreglo[contador2].getNota()*arreglo[contador2].getCreditos());
+                    acumTemporalCredito = arreglo[contador2].getCreditos();
+                    contador2++;
                     
                 }
-                texto += "</html>";
-               
-               
-            }
+                acumuladorNotaCredito = acumuladorNotaCredito + acumTemporalNota;
+                acumCreditos = acumCreditos + acumTemporalCredito; 
+                System.out.println(acumuladorNotaCredito);
+                System.out.println(acumCreditos);
 
-        
+                double totalPonderado = (acumuladorNotaCredito / acumCreditos);
+                String totalFinal = String.valueOf(totalPonderado);
+                System.out.println(totalPonderado);
+                
+
+               campo_total.setText(totalFinal);
+               campo_materia.setText(" ");
+               campo_credito.setText(" ");
+               campo_nota.setText(" ");
+
+            }
         };
         btn_registrar.addActionListener(evento_registrar);
+
+
+        ActionListener evento_limpiar = new ActionListener(){
+            public void actionPerformed(ActionEvent event){
+            
+                for(int i = 0; i < listaJLabels.length; i++){
+                    contador = 0;
+                    acumuladorNotaCredito = 0;
+                    acumCreditos = 0;
+                    String limpiado = " ";
+                    listaJLabels[i].setText(limpiado);
+                    campo_total.setText(" ");
+                    
+                }
+            }
+        };
+        btn_limpiar.addActionListener(evento_limpiar);
+
+
         
 
-        add(contenedor);
-		setResizable(false);
-		setVisible(true);
-		revalidate();
+
+
+        
+
+       
 		
       
     }
+
+    public void desHabilitarInput(JTextField campo){
+		campo.setEditable(false);
+		campo.setBackground(new Color(238, 238, 238));
+	}
+
+  
+
+
 }
