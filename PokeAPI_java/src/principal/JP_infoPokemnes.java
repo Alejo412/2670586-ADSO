@@ -28,6 +28,7 @@ public class JP_infoPokemnes extends javax.swing.JPanel {
     DefaultTableModel modelo; 
     int posicion;
     Pokemon listaBotones [];
+    //Pokemon pokemonActual;
  
     
       
@@ -42,6 +43,10 @@ public class JP_infoPokemnes extends javax.swing.JPanel {
         llenarCampoNombre();
         imprimirTablaInfoPokemon();
         imprimirImgPokemon();
+        
+        
+        //listaBotones = ventana.obtnerPokemon();
+        //pokemonActual = ventana.listaBotones[posicion];
         
     }
     
@@ -63,9 +68,18 @@ public class JP_infoPokemnes extends javax.swing.JPanel {
        
         tabla_infoPokmon.setRowHeight(25);
         
+        Image felcha_atras = getToolkit().createImage( ClassLoader.getSystemResource("img/flecha-izquierda.png") );
+        felcha_atras = felcha_atras.getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+        etq_btonAtras.setIcon(new ImageIcon(felcha_atras));
+        Image felcha_adelante = getToolkit().createImage( ClassLoader.getSystemResource("img/flecha-correcta.png") );
+        felcha_adelante = felcha_adelante.getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+        etq_btonAdelante.setIcon(new ImageIcon(felcha_adelante));
+        
+        
       }
       
        public void llenarCampoNombre(){
+        
         
         listaBotones = ventana.obtnerPokemon();
         etq_tituloNombre.setText(ventana.listaBotones[posicion].getNombre());
@@ -125,6 +139,7 @@ public class JP_infoPokemnes extends javax.swing.JPanel {
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("Error al descargar la imagen: " + e.getMessage());
+            imprimirImgPokemon();
         }
 
        
@@ -142,12 +157,16 @@ public class JP_infoPokemnes extends javax.swing.JPanel {
         etq_imagen = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabla_infoPokmon = new javax.swing.JTable();
+        etq_btonAtras = new javax.swing.JLabel();
+        etq_btonAdelante = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
-        etq_tituloNombre.setFont(new java.awt.Font("Tw Cen MT Condensed Extra Bold", 1, 48)); // NOI18N
+        etq_tituloNombre.setFont(new java.awt.Font("Viner Hand ITC", 1, 48)); // NOI18N
         etq_tituloNombre.setForeground(new java.awt.Color(0, 0, 0));
         etq_tituloNombre.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        etq_imagen.setBackground(new java.awt.Color(255, 255, 255));
 
         tabla_infoPokmon.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -162,6 +181,12 @@ public class JP_infoPokemnes extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(tabla_infoPokmon);
 
+        etq_btonAdelante.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                etq_btonAdelanteMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -170,28 +195,60 @@ public class JP_infoPokemnes extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(75, 75, 75)
-                        .addComponent(etq_imagen, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap()
+                        .addComponent(etq_btonAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(etq_imagen, javax.swing.GroupLayout.PREFERRED_SIZE, 376, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(etq_btonAdelante, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(41, 41, 41)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 472, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(43, Short.MAX_VALUE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 472, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 39, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(28, 28, 28)
                 .addComponent(etq_tituloNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(etq_imagen, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(93, 93, 93)
+                        .addComponent(etq_btonAdelante, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(93, 93, 93)
+                        .addComponent(etq_btonAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(etq_imagen, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(17, 17, 17))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void etq_btonAdelanteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_etq_btonAdelanteMouseClicked
+        listaBotones = ventana.obtnerPokemon();
+    if (posicion + 1 < ventana.listaBotones.length) {
+        Pokemon pokemonSiguiente = ventana.listaBotones[posicion+1];
+        //pokemonActual = pokemonSiguiente;
+        System.out.println(pokemonSiguiente.getNombre());
+        imprimirImgPokemon();
+    } else {
+        System.out.println("No hay un Pokémon siguiente.");
+    }
+        
+        
+        
+
+        
+    }//GEN-LAST:event_etq_btonAdelanteMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel etq_btonAdelante;
+    private javax.swing.JLabel etq_btonAtras;
     private javax.swing.JLabel etq_imagen;
     private javax.swing.JLabel etq_tituloNombre;
     private javax.swing.JScrollPane jScrollPane1;

@@ -5,9 +5,11 @@
         <group>
             <file>file:/D:/JAVA/PokeAPI_java/src/principal/JP_infoPokemnes.java</file>
             <file>file:/D:/JAVA/PokeAPI_java/src/utils/ConsumoAPI.java</file>
+            <file>file:/D:/JAVA/PokeAPI_java/src/img/flecha-izquierda.png</file>
             <file>file:/D:/JAVA/PokeAPI_java/src/utils/Pokemon.java</file>
             <file>file:/D:/JAVA/PokeAPI_java/src/utils/ButtonRenderer.java</file>
             <file>file:/D:/JAVA/PokeAPI_java/src/utils/ButtonEditor.java</file>
+            <file>file:/D:/JAVA/PokeAPI_java/src/img/pokebola.png</file>
             <file>file:/D:/JAVA/PokeAPI_java/src/principal/Principal.java</file>
             <file>file:/D:/JAVA/PokeAPI_java/src/principal/contentPrincipal.java</file>
         </group>

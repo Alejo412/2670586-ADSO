@@ -208,7 +208,7 @@ public class contentPrincipal extends javax.swing.JFrame {
 
         contentHead.setBackground(new java.awt.Color(255, 255, 255));
 
-        etq_tituloprincipal.setFont(new java.awt.Font("Wide Latin", 1, 24)); // NOI18N
+        etq_tituloprincipal.setFont(new java.awt.Font("Viner Hand ITC", 1, 24)); // NOI18N
         etq_tituloprincipal.setForeground(new java.awt.Color(255, 0, 0));
         etq_tituloprincipal.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         etq_tituloprincipal.setText("POKEDEX");
@@ -239,7 +239,7 @@ public class contentPrincipal extends javax.swing.JFrame {
         );
         contentPaginadorLayout.setVerticalGroup(
             contentPaginadorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 61, Short.MAX_VALUE)
+            .addGap(0, 64, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
