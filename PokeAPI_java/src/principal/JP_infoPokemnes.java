@@ -27,7 +27,9 @@ public class JP_infoPokemnes extends javax.swing.JPanel {
     contentPrincipal ventana;
     DefaultTableModel modelo; 
     int posicion;
+    int posActual;
     Pokemon listaBotones [];
+    String listaImagenes [];
     //Pokemon pokemonActual;
  
     
@@ -111,21 +113,37 @@ public class JP_infoPokemnes extends javax.swing.JPanel {
     }
     
     public void imprimirImgPokemon(){
+        
         String respuestaUrl = consumo.consumoGET(ventana.listaBotones[posicion].getUrl());
         JsonObject informacion = JsonParser.parseString( respuestaUrl ).getAsJsonObject();
        
-        JsonObject objetoSprites = informacion.getAsJsonObject("sprites");
+        //JsonObject objetoSprites = informacion.getAsJsonObject("sprites");
         
-        JsonObject objetoOther = objetoSprites.getAsJsonObject("other");
+        // objetoOther = objetoSprites.getAsJsonObject("other");
         
-        JsonObject objetoHome = objetoOther.getAsJsonObject("home");
+        //JsonObject objetoHome = objetoOther.getAsJsonObject("home");
      
-        String urlImg = objetoHome.get("front_default").getAsString();
-        System.out.println(urlImg);
+        // urlImg = objetoHome.get("front_default").getAsString();
+        //System.out.println(urlImg);
         
+        this.listaImagenes = new String[3];
+        this.listaImagenes[0] = informacion.getAsJsonObject("sprites").getAsJsonObject("other").getAsJsonObject("official-artwork").get("front_default").getAsString();
+        this.listaImagenes[1] = informacion.getAsJsonObject("sprites").getAsJsonObject("other").getAsJsonObject("official-artwork").get("front_shiny").getAsString();
+        this.listaImagenes[2] = informacion.getAsJsonObject("sprites").getAsJsonObject("other").getAsJsonObject("home").get("front_default").getAsString();
+        this.posActual = 0;
+        cargarImagenPokemon();
+        
+        
+        revalidate();
+        repaint();
+          
+    }
+    
+    
+    public void cargarImagenPokemon(){
         try {
         // Descargar la imagen desde la URL
-        URL url = new URL(urlImg);
+        URL url = new URL(listaImagenes[posActual]);
         Image fotoPokemon = ImageIO.read(url);
 
         // Escalar la imagen
@@ -141,9 +159,15 @@ public class JP_infoPokemnes extends javax.swing.JPanel {
             System.out.println("Error al descargar la imagen: " + e.getMessage());
             imprimirImgPokemon();
         }
+        if (posActual==0) {
+            etq_btonAtras.setEnabled(false);
+        }
+        
+        if (posActual==2) {
+            etq_btonAdelante.setEnabled(false);
+        }
+        
 
-       
-         
     }
        
     
@@ -180,6 +204,12 @@ public class JP_infoPokemnes extends javax.swing.JPanel {
             }
         ));
         jScrollPane1.setViewportView(tabla_infoPokmon);
+
+        etq_btonAtras.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                etq_btonAtrasMouseClicked(evt);
+            }
+        });
 
         etq_btonAdelante.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -220,30 +250,30 @@ public class JP_infoPokemnes extends javax.swing.JPanel {
                         .addGap(93, 93, 93)
                         .addComponent(etq_btonAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(etq_imagen, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(17, 17, 17))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void etq_btonAdelanteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_etq_btonAdelanteMouseClicked
-        listaBotones = ventana.obtnerPokemon();
-    if (posicion + 1 < ventana.listaBotones.length) {
-        Pokemon pokemonSiguiente = ventana.listaBotones[posicion+1];
-        //pokemonActual = pokemonSiguiente;
-        System.out.println(pokemonSiguiente.getNombre());
-        imprimirImgPokemon();
-    } else {
-        System.out.println("No hay un Pokémon siguiente.");
-    }
-        
-        
-        
-
-        
+      if (this.posActual<2) {
+            this.posActual++;
+            cargarImagenPokemon();
+            etq_btonAtras.setEnabled(true);
+        }
+     
     }//GEN-LAST:event_etq_btonAdelanteMouseClicked
+
+    private void etq_btonAtrasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_etq_btonAtrasMouseClicked
+         if (this.posActual>0) {
+            this.posActual--;
+            cargarImagenPokemon();
+            etq_btonAdelante.setEnabled(true);
+        }
+    }//GEN-LAST:event_etq_btonAtrasMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
