@@ -28,6 +28,7 @@ public class ContentPrincipal extends javax.swing.JFrame {
     int listaNumerosPagniador [];
     int numDigimones;
     String posicion;
+     JButton botonAnteriorSeleccionado = null;
     
     
     public ContentPrincipal() {
@@ -112,6 +113,7 @@ public class ContentPrincipal extends javax.swing.JFrame {
        JButton btnSiguiente = new JButton( );
         JButton btnatras = new JButton( );
        JButton btnPrimerpag = new JButton( );
+      
        
 
         
@@ -153,6 +155,17 @@ public class ContentPrincipal extends javax.swing.JFrame {
                             btnNums[j].setText(posicion); 
                             //System.out.println(listaNumerosPagniador[j]);
                         }
+                        for (int j = 0; j < btnNums.length; j++) {
+                                btnNums[j].setBackground(null);
+                                btnNums[j].setForeground(null);
+                        }
+                        
+                        btnNums[0].setBackground(new Color(25, 184, 194));
+                        
+                        //btnPrimerpag.setBackground(new Color(25, 184, 194));
+                        //btnPrimerpag.setForeground(Color.black);
+                        
+                        
                         
                        
                     }
@@ -221,6 +234,11 @@ public class ContentPrincipal extends javax.swing.JFrame {
                     
                      JButton sourceButton = (JButton) e.getSource();
                     int posicionPag = Integer.parseInt(sourceButton.getText());
+                    
+                     if (botonAnteriorSeleccionado != null) {
+                        botonAnteriorSeleccionado.setBackground(null);
+                        botonAnteriorSeleccionado.setForeground(null);
+                    }
 
                     if(posicionPag > 3){
                         System.out.println("Esta adelante");
@@ -236,11 +254,23 @@ public class ContentPrincipal extends javax.swing.JFrame {
                             //pagina = listaNumerosPagniador[3];
                              
                             btnNums[j].setText(posicion); 
+                            
                         }
+                        btnNums[3].setBackground(new Color(25, 184, 194));
+                        btnNums[3].setForeground(Color.black);
+                        botonAnteriorSeleccionado = btnNums[3];
+                        
+                        
    
+                    }else{
+                         pagina = posicionPag;
+                         btnNums[posicionPag].setBackground(new Color(25, 184, 194));
+                        btnNums[posicionPag].setForeground(Color.black);
+                        botonAnteriorSeleccionado = btnNums[posicionPag];
+                        
                     }
                     
-                    pagina = posicionPag;
+                   
                     contentDetalle.removeAll();
                     cargarDigimon();
                     System.out.println(pagina);
@@ -313,7 +343,18 @@ public class ContentPrincipal extends javax.swing.JFrame {
                             posicion = Integer.toString(listaNumerosPagniador[j]);
                             btnNums[j].setText(posicion); 
                             //System.out.println(listaNumerosPagniador[j]);
-                        }
+                    }
+                    
+                    
+                    for (int j = 0; j < btnNums.length; j++) {
+                    btnNums[j].setBackground(null);
+                    btnNums[j].setForeground(null);
+                    }
+                    
+                     btnNums[6].setBackground(new Color(25, 184, 194));
+                    
+                    //btnUltimaPagina.setBackground(new Color(25, 184, 194));
+                    //btnUltimaPagina.setForeground(Color.black);
                         
                     
                     
